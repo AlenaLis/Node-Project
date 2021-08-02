@@ -5,14 +5,15 @@ const keys = require('../config/keys')
 const errorHandler = require('../utilits/errorHandler')
 
 module.exports.login = async function (req, res) {
-  const candidate = await User.findOne({email: req.body.email})
+  console.log('===>req.body.inputForEmail', req.body.inputForEmail);
+  const candidate = await User.findOne({inputForEmail: req.body.inputForEmail})
   if (candidate) {
     //password  check, user exists
-    const passwordResult = bcrypt.compareSync(req.body.password, candidate.password)
+    const passwordResult = bcrypt.compareSync(req.body.inputForPassword, candidate.inputForPassword)
     if (passwordResult) {
       //token,if user is found and passwords are the same, give user some token
       const token = jwt.sign({ //method of registration in library 'jsonwebtoken'
-        email: candidate.email,
+        inputForEmail: candidate.inputForEmail,
         userId: candidate._id
       }, keys.jwt, {expiresIn: 60 * 60})//<--key for token, (expiresIn:60 * 60) <--save token for 1 hour
       res.status(200).json({
@@ -32,10 +33,10 @@ module.exports.login = async function (req, res) {
   }
 }
 
+
 module.exports.register = async function (req, res) {
   //email password
-  const candidate = await User.findOne({email: req.body.email})
-
+  const candidate = await User.findOne({inputForPassword: req.body.inputForPassword})
   if (candidate) {
     //user  exists, show error
     res.status(409).json({
@@ -45,18 +46,37 @@ module.exports.register = async function (req, res) {
     //should create user
     //shifr password
     const salt = bcrypt.genSaltSync(10)
-    const password = req.body.password
+    const password = req.body.inputForPassword
     const user = new User({
-      email: req.body.email,
-      password: bcrypt.hashSync(password, salt)
+      inputForEmail: req.body.inputForEmail,
+      inputForPassword: bcrypt.hashSync(password, salt),
+      name: req.body.name,
+      lastName: req.body.lastName
     })
-
     try {
       await user.save()
       res.status(201).json(user)
     } catch (e) {
       errorHandler(res, e)
     }
-
   }
 }
+
+module.exports.update = async function (req, res) {
+  const updated = {
+    name: req.body.name,
+    lastName: req.body.lastName,
+    description: req.body.description
+  }
+  try {
+    const user = await User.findOneAndUpdate(
+      {_id: req.params.id},
+      {$set: updated},
+      {new: true}
+    )
+    res.status(200).json(user)
+  } catch (e) {
+    errorHandler(res, e)
+  }
+}
+

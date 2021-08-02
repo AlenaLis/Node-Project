@@ -11,7 +11,7 @@ const positionSchema = new Schema({
     required: true
   },
   category: {
-    ref: 'categories',
+    ref: 'articles',
     type: Schema.Types.ObjectId
   },
   user: {

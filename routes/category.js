@@ -10,6 +10,8 @@ router.get('/:id', passport.authenticate('jwt', {session: false}), controller.ge
 router.delete('/:id',passport.authenticate('jwt', {session: false}), controller.remove)
 router.post('/',upload.single('image'), passport.authenticate('jwt', {session: false}), controller.create)
 router.patch('/:id',upload.single('image'),passport.authenticate('jwt', {session: false}), controller.update)
+router.patch('/:id/watch',upload.single('image'), passport.authenticate('jwt', {session: false}), controller.countWatch)
+
 
 
 module.exports =  router

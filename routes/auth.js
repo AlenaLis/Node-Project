@@ -1,9 +1,10 @@
 const express = require('express')
-const router = express.Router()
+const passport = require('passport')
 const controller = require('../controllers/auth')
+const router = express.Router()
 
 router.post('/login', controller.login)
-
 router.post('/register', controller.register)
+router.patch('/:id', passport.authenticate('jwt', {session: false}), controller.update)
 
 module.exports =  router

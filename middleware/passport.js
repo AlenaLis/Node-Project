@@ -15,7 +15,7 @@ module.exports = passport => {
   passport.use(
     new JwtStrategy(options, async (payload, done) => {
       try {
-        const user = await User.findById(payload.userId).select('email id')  //userId-we take it from token from auth.js
+        const user = await User.findById(payload.userId).select('inputForEmail id')  //userId-we take it from token from auth.js
         if (user) { //in node.js first param - error!
           done(null, user)
         } else {
