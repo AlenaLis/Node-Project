@@ -39,7 +39,8 @@ module.exports.create = async function (req, res) {
     user: req.user.id,
     imageSrc: req.file ? req.file.path : '',
     category: '#' + req.body.category,
-    count: req.body.count
+    count: req.body.count,
+
   })
   try {
     await category.save()

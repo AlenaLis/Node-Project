@@ -25,7 +25,11 @@ const categorySchema = new Schema({
   count: {
     type:Number,
     default: 0
-  }
+  },
+  // userName:{
+  //   ref: 'users',
+  //   type: Schema.name.
+  // }
 })
 
 module.exports = mongoose.model('articles', categorySchema)

@@ -17,7 +17,8 @@ module.exports.login = async function (req, res) {
         userId: candidate._id
       }, keys.jwt, {expiresIn: 60 * 60})//<--key for token, (expiresIn:60 * 60) <--save token for 1 hour
       res.status(200).json({
-        token: `Bearer ${token}`//correct token with bearer
+        token: `Bearer ${token}`, //correct token with bearer
+        userId: candidate._id,
       })
     } else {
       //Passwords are different
@@ -75,6 +76,15 @@ module.exports.update = async function (req, res) {
       {new: true}
     )
     res.status(200).json(user)
+  } catch (e) {
+    errorHandler(res, e)
+  }
+}
+
+module.exports.getInfo = async function (req, res) {
+  try {
+    const articles = await User.find({_id: req.params.id})
+    res.status(200).json(articles)
   } catch (e) {
     errorHandler(res, e)
   }
