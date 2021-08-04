@@ -15,7 +15,7 @@ module.exports.login = async function (req, res) {
       const token = jwt.sign({ //method of registration in library 'jsonwebtoken'
         inputForEmail: candidate.inputForEmail,
         userId: candidate._id
-      }, keys.jwt, {expiresIn: 60 * 60})//<--key for token, (expiresIn:60 * 60) <--save token for 1 hour
+      }, keys.jwt, {expiresIn: 600 * 600})//<--key for token, (expiresIn:60 * 60) <--save token for 1 hour
       res.status(200).json({
         token: `Bearer ${token}`, //correct token with bearer
         userId: candidate._id,

@@ -1,4 +1,5 @@
 const Category = require('../models/Category')
+const User = require('../models/User')
 const Position = require('../models/Position')
 const errorHandler = require('../utilits/errorHandler')
 
@@ -13,7 +14,22 @@ module.exports.getAll = async function (req, res) {
 
 module.exports.getById = async function (req, res) {
   try {
-    const category = await Category.find({user: req.params.id})
+
+    const category = await Category.find({
+      'user.id': req.params.id
+    })
+    const category2 = await Category.find()
+
+    res.status(200).json(category)
+  } catch (e) {
+    errorHandler(res, e)
+  }
+}
+
+module.exports.getByIdOneArt = async function (req, res) {
+  try {
+
+    const category = await Category.find({_id: req.params.id})
     res.status(200).json(category)
   } catch (e) {
     errorHandler(res, e)
@@ -33,16 +49,25 @@ module.exports.remove = async function (req, res) {
 }
 
 module.exports.create = async function (req, res) {
-  const category = new Category({
-    title: req.body.title,
-    textArt: req.body.textArt,
-    user: req.user.id,
-    imageSrc: req.file ? req.file.path : '',
-    category: '#' + req.body.category,
-    count: req.body.count,
-
-  })
   try {
+    console.log('===>req', req.body);
+    console.log('===>req.file', req.file);
+    const user = await User.findById(req.user.id)
+    const category = new Category({
+      title: req.body.title,
+      textArt: req.body.textArt,
+
+      user: {
+        name: user.name,
+        lastName: user.lastName,
+        id: req.user.id,
+      },
+      imageSrc: req.body.imageSrc ? req.body.imageSrc : '',
+
+      category: '#' + req.body.category,
+      count: req.body.count,
+      data: req.body.data,
+    })
     await category.save()
     res.status(201).json(category)
   } catch (e) {
@@ -75,17 +100,17 @@ module.exports.update = async function (req, res) {
 
 
 module.exports.countWatch = async function (req, res) {
-const myArticle = await Category.find({_id: req.params.id})
-const myCount = 1;
+  const myArticle = await Category.find({_id: req.params.id})
+  const myCount = 1;
 
 
   let updated = {
-    count : myArticle[0].count + 1
+    count: myArticle[0].count + 1
   }
   try {
     const category = await Category.findOneAndUpdate(
       {_id: req.params.id},
-      {$set:updated},
+      {$set: updated},
       {new: true}
     )
     res.status(200).json(category)

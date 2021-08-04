@@ -15,16 +15,24 @@ const categorySchema = new Schema({
     required: true //обязательное поле
   },
   imageSrc: {
-    type:String,
+    type: String,
     default:''
   },
   user: {
-    ref: 'users',
-    type: Schema.Types.ObjectId
+    name: String,
+    lastName: String,
+    id: Schema.Types.ObjectId
+  },
+  userID: {
+    id: Schema.Types.ObjectId
   },
   count: {
     type:Number,
     default: 0
+  },
+  data: {
+    type:String,
+    default: ''
   },
   // userName:{
   //   ref: 'users',
