@@ -1,6 +1,5 @@
 const Category = require('../models/Category')
 const User = require('../models/User')
-const Position = require('../models/Position')
 const errorHandler = require('../utilits/errorHandler')
 
 module.exports.getAll = async function (req, res) {
@@ -18,8 +17,6 @@ module.exports.getById = async function (req, res) {
     const category = await Category.find({
       'user.id': req.params.id
     })
-    const category2 = await Category.find()
-
     res.status(200).json(category)
   } catch (e) {
     errorHandler(res, e)
@@ -39,7 +36,6 @@ module.exports.getByIdOneArt = async function (req, res) {
 module.exports.remove = async function (req, res) {
   try {
     await Category.remove({_id: req.params.id})
-    await Position.remove({category: req.params.id})
     res.status(200).json({
       message: 'Category was deleted'
     })
@@ -49,21 +45,25 @@ module.exports.remove = async function (req, res) {
 }
 
 module.exports.create = async function (req, res) {
+
   try {
-    console.log('===>req', req.body);
-    console.log('===>req.file', req.file);
     const user = await User.findById(req.user.id)
     const category = new Category({
       title: req.body.title,
       textArt: req.body.textArt,
-
       user: {
         name: user.name,
         lastName: user.lastName,
         id: req.user.id,
+        imageSrc: {
+          format: user.imageSrc.format,
+          dataUrl: user.imageSrc.dataUrl,
+        },
       },
-      imageSrc: req.body.imageSrc ? req.body.imageSrc : '',
-
+      imageSrc: {
+        format: req.body.imageSrc.format,
+        dataUrl: req.body.imageSrc.dataUrl,
+      },
       category: '#' + req.body.category,
       count: req.body.count,
       data: req.body.data,
@@ -98,11 +98,9 @@ module.exports.update = async function (req, res) {
   }
 }
 
-
 module.exports.countWatch = async function (req, res) {
   const myArticle = await Category.find({_id: req.params.id})
   const myCount = 1;
-
 
   let updated = {
     count: myArticle[0].count + 1

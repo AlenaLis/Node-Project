@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
+
   inputForEmail: {
     type: String,
     required: true, //обязательное поле
@@ -22,6 +23,10 @@ const userSchema = new Schema({
   description: {
     type: String,
     //обязательное поле
+  },
+  imageSrc: {
+    type: Object,
+    default: null
   },
 })
 

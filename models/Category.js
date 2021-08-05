@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const categorySchema = new Schema({
+
   title: {
     type:String,
     required: true //обязательное поле
@@ -15,16 +16,17 @@ const categorySchema = new Schema({
     required: true //обязательное поле
   },
   imageSrc: {
-    type: String,
-    default:''
+    type: Object,
+    default: null
   },
   user: {
     name: String,
     lastName: String,
-    id: Schema.Types.ObjectId
-  },
-  userID: {
-    id: Schema.Types.ObjectId
+    id: Schema.Types.ObjectId,
+    imageSrc: {
+      type: Object,
+      default: null
+    },
   },
   count: {
     type:Number,
@@ -34,10 +36,6 @@ const categorySchema = new Schema({
     type:String,
     default: ''
   },
-  // userName:{
-  //   ref: 'users',
-  //   type: Schema.name.
-  // }
 })
 
 module.exports = mongoose.model('articles', categorySchema)
