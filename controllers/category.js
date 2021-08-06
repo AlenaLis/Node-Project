@@ -3,6 +3,7 @@ const User = require('../models/User')
 const errorHandler = require('../utilits/errorHandler')
 
 module.exports.getAll = async function (req, res) {
+
   try {
     const articles = await Category.find()
     res.status(200).json(articles)
@@ -12,8 +13,8 @@ module.exports.getAll = async function (req, res) {
 }
 
 module.exports.getById = async function (req, res) {
-  try {
 
+  try {
     const category = await Category.find({
       'user.id': req.params.id
     })
@@ -24,8 +25,8 @@ module.exports.getById = async function (req, res) {
 }
 
 module.exports.getByIdOneArt = async function (req, res) {
-  try {
 
+  try {
     const category = await Category.find({_id: req.params.id})
     res.status(200).json(category)
   } catch (e) {
@@ -34,6 +35,7 @@ module.exports.getByIdOneArt = async function (req, res) {
 }
 
 module.exports.remove = async function (req, res) {
+
   try {
     await Category.remove({_id: req.params.id})
     res.status(200).json({
@@ -76,6 +78,7 @@ module.exports.create = async function (req, res) {
 }
 
 module.exports.update = async function (req, res) {
+
   const updated = {
     title: req.body.title,
     textArt: req.body.textArt,
@@ -99,12 +102,14 @@ module.exports.update = async function (req, res) {
 }
 
 module.exports.countWatch = async function (req, res) {
+
   const myArticle = await Category.find({_id: req.params.id})
   const myCount = 1;
 
   let updated = {
     count: myArticle[0].count + 1
   }
+
   try {
     const category = await Category.findOneAndUpdate(
       {_id: req.params.id},

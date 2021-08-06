@@ -14,7 +14,7 @@ app.use(passport.initialize())
 require('./middleware/passport')(passport)
 
 app.use(require('morgan')('dev'))
-app.use('/uploads', expess.static(__dirname + '/uploads/')) //images
+app.use('/uploads', expess.static(__dirname + '/uploads/'))
 app.use(require('cors')())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())

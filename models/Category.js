@@ -5,15 +5,15 @@ const categorySchema = new Schema({
 
   title: {
     type:String,
-    required: true //обязательное поле
+    required: true
   },
   textArt: {
     type:String,
-    required: true //обязательное поле
+    required: true
   },
   category: {
     type:String,
-    required: true //обязательное поле
+    required: true
   },
   imageSrc: {
     type: Object,

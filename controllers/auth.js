@@ -9,26 +9,24 @@ module.exports.login = async function (req, res) {
   const candidate = await User.findOne({inputForEmail: req.body.inputForEmail})
 
   if (candidate) {
-    //password  check, user exists
+
     const passwordResult = bcrypt.compareSync(req.body.inputForPassword, candidate.inputForPassword)
+
     if (passwordResult) {
-      //token,if user is found and passwords are the same, give user some token
-      const token = jwt.sign({ //method of registration in library 'jsonwebtoken'
+      const token = jwt.sign({
         inputForEmail: candidate.inputForEmail,
         userId: candidate._id
-      }, keys.jwt, {expiresIn: 600 * 600})//<--key for token, (expiresIn:60 * 60) <--save token for 1 hour
+      }, keys.jwt, {expiresIn: 600 * 600})
       res.status(200).json({
-        token: `Bearer ${token}`, //correct token with bearer
+        token: `Bearer ${token}`,
         userId: candidate._id,
       })
     } else {
-      //Passwords are different
       res.status(401).json({
         message: 'Passwords are not the same'
       })
     }
   } else {
-    //user not found, error
     res.status(404).json({
       message: 'User with this email is not found'
     })
@@ -36,10 +34,9 @@ module.exports.login = async function (req, res) {
 }
 
 module.exports.register = async function (req, res) {
-  //email password
+
   const candidate = await User.findOne({inputForPassword: req.body.inputForPassword})
   if (candidate) {
-    //user  exists, show error
     res.status(409).json({
       message: 'This email is already used, try other'
     })

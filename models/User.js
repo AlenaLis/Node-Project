@@ -1,11 +1,11 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
 
   inputForEmail: {
     type: String,
-    required: true, //обязательное поле
+    required: true,
     unique: true
   },
   inputForPassword: {
@@ -14,15 +14,14 @@ const userSchema = new Schema({
   },
   name: {
     type: String,
-    required: true, //обязательное поле
+    required: true,
   },
   lastName: {
     type: String,
-    required: true, //обязательное поле
+    required: true,
   },
   description: {
     type: String,
-    //обязательное поле
   },
   imageSrc: {
     type: Object,

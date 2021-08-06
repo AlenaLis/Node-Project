@@ -1,0 +1,58 @@
+Arguments: 
+  /usr/local/bin/node /Users/justice/.yarn/bin/yarn.js
+
+PATH: 
+  /Users/justice/.yarn/bin:/Users/justice/.config/yarn/global/node_modules/.bin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+Yarn version: 
+  1.22.5
+
+Node version: 
+  16.5.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:71:26)
+
+npm manifest: 
+  {
+    "name": "nodeapp",
+    "version": "1.0.0",
+    "description": "fullstack app with node and express",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index",
+      "server": "node_modules/.bin/nodemon  index"
+    },
+    "keywords": [
+      "express",
+      "angular"
+    ],
+    "author": "Alena Lisovenko",
+    "license": "ISC",
+    "dependencies": {
+      "bcryptjs": "2.4.3",
+      "body-parser": "1.19.0",
+      "cors": "^2.8.5",
+      "express": "4.17.1",
+      "jsonwebtoken": "8.5.1",
+      "moment": "2.29.1",
+      "mongoose": "5.13.4",
+      "morgan": "^1.10.0",
+      "multer": "1.4.2",
+      "passport": "0.4.1",
+      "passport-jwt": "4.0.0"
+    },
+    "devDependencies": {
+      "nodemon": "2.0.12"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
