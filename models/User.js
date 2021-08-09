@@ -20,12 +20,9 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  description: {
-    type: String,
-  },
-  imageSrc: {
-    type: Object,
-    default: null
+  admin: {
+    type: Number,
+    default: 0
   },
 })
 

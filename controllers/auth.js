@@ -20,6 +20,7 @@ module.exports.login = async function (req, res) {
       res.status(200).json({
         token: `Bearer ${token}`,
         userId: candidate._id,
+        admin: candidate.admin
       })
     } else {
       res.status(401).json({
@@ -48,7 +49,8 @@ module.exports.register = async function (req, res) {
       inputForEmail: req.body.inputForEmail,
       inputForPassword: bcrypt.hashSync(password, salt),
       name: req.body.name,
-      lastName: req.body.lastName
+      lastName: req.body.lastName,
+      admin: req.body.admin,
     })
     try {
       await user.save()
@@ -64,10 +66,6 @@ module.exports.update = async function (req, res) {
     name: req.body.name,
     lastName: req.body.lastName,
     description: req.body.description,
-    imageSrc: {
-      format: req.body.imageSrc.format,
-      dataUrl: req.body.imageSrc.dataUrl,
-    },
   }
 
   try {

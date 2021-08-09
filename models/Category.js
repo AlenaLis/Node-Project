@@ -23,10 +23,6 @@ const categorySchema = new Schema({
     name: String,
     lastName: String,
     id: Schema.Types.ObjectId,
-    imageSrc: {
-      type: Object,
-      default: null
-    },
   },
   count: {
     type:Number,
